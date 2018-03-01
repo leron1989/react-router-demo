@@ -43,7 +43,7 @@
     >我们可以在运行 webpack-dev-server 时指定 output.publicPath：<br>
     >$ npx webpack serve --mode development --output-public-path dist<br>
 
-* 安装react:npm install --save react rect-dom
+* 安装react:npm install --save react react-dom
 
 * 安装babel
     1. 根目录新建.babelrc文件：
@@ -70,7 +70,6 @@
                 path: path.resolve(__dirname, 'dist')
             },
             module: {
-                /*webpack 4 不支持loaders[]写法*/
                 rules:[
                     {
                         test:/\.js$/,
@@ -84,4 +83,91 @@
             }
         }
     ```
+* webpack加载css
+    1. 安装
+    npm install --save-dev style-loader css-loader
 
+    2. 配置
+    ```javascript
+        {
+            test:/\.css$/,
+            use:[
+                'style-loader',
+                'css-loader'
+            ]
+        }
+    ```
+* webpack 加载图片
+    1. 安装
+    npm install --save-dev file-loader
+    2. 配置
+    ```javascript
+        {
+            test:/\.(png|svg|jpg|gif)$/,
+            use:[
+                'file-loader'
+            ]
+        }
+    ```
+* webpack加载字体
+    1. 安装
+        >同加载图片
+    2. 配置
+    ```javascript
+        {
+            test:/\.(woff|woff2|eot|ttf|otf)$/,
+            use:[
+                'file-loader'
+            ]
+        }
+    ```
+* webpack加载资源
+    1. 安装
+    npm install --save-dev csv-loader xml-loader
+    2. 配置
+    ```javascript
+        {
+            test:/\.(csv|tsv)$/,
+            use:[
+                'csc-loader'
+            ]
+        },
+        {
+            test:/\.xml$/,
+            use:[
+                'xml-loader'
+            ]
+        }
+    ```
+
+* 使用HtmlWebpackPlugin自动生成index.html文件
+    1. 安装
+    npm install --save-dev html-webpack-plugin
+    2. 配置
+    ```javascript
+        const HtmlWebpackPlugin = require('html-webpack-plugin');
+        plugins:[
+            new HtmlWebpackPlugin({
+                title: 'react router demo'
+            })
+        ],
+    ```
+* 清理/dist
+    1. 安装
+    npm install clean-webpack-plugin --save-dev
+    2. 配置
+    ```javascript
+        const CleanWebpackPlugin = require('clean-webpack-plugin');
+        plugins:[
+            new CleanWebpackPlugin(['dist']),
+            new HtmlWebpackPlugin({
+                title: 'react router demo'
+            })
+        ],
+    ```
+* source map 错误追踪
+    1. 配置
+    ```javascript
+        devtool: 'inline-source-map',
+    ```
+    

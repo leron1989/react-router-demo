@@ -1,11 +1,40 @@
-var path = require('path');
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
-    entry: './src/index.js',
+    entry: {
+        app:'./src/index.js',
+        another: './src/another'
+    },
     output: {
-        filename: 'bundle.js',
+        filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist')
     },
+    devtool: 'inline-source-map',
+    devServer:{
+        //上下文根目录
+        contentBase: './dist'
+    },
+    optimization: {
+        runtimeChunk: {
+            name: "manifest"
+        },
+        splitChunks: {
+            cacheGroups: {
+                commons: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: "vendor",
+                    chunks: "all"
+                }
+            }
+        }
+    },
+    plugins:[
+        new HtmlWebpackPlugin({
+            title: 'react router demo'
+        })
+    ],
     module: {
         //webpack 4 不支持loaders[]写法
         rules:[
@@ -16,6 +45,37 @@ module.exports = {
                 query: {
                     presets:['es2015', 'react']
                 }
+            },
+            {
+                test:/\.css$/,
+                use:[
+                    'style-loader',
+                    'css-loader'
+                ]
+            },
+            {
+                test:/\.(png|svg|jpg|gif)$/,
+                use:[
+                    'file-loader'
+                ]
+            },
+            {
+                test:/\.(woff|woff2|eot|ttf|otf)$/,
+                use:[
+                    'file-loader'
+                ]
+            },
+            {
+                test:/\.(csv|tsv)$/,
+                use:[
+                    'csc-loader'
+                ]
+            },
+            {
+                test:/\.xml$/,
+                use:[
+                    'xml-loader'
+                ]
             }
         ]
     }

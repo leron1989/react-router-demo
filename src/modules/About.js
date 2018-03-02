@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 
 class About extends React.Component{
 
@@ -7,8 +6,6 @@ class About extends React.Component{
         return(
             <div>
                 <h2>About</h2>
-                <Link to="/message/aaaaaa">Message</Link>
-                {this.props.children}
             </div>
         )
     }

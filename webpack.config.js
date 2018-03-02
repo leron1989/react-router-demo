@@ -1,11 +1,10 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const webpack = require('webpack');
 
 module.exports = {
     entry: {
-        app:'./src/index.js',
-        another: './src/another'
+        app:'./src/index.js'
     },
     output: {
         filename: '[name].bundle.js',
@@ -16,27 +15,26 @@ module.exports = {
         //上下文根目录
         contentBase: './dist'
     },
-    optimization: {
-        runtimeChunk: {
-            name: "manifest"
-        },
-        splitChunks: {
-            cacheGroups: {
-                commons: {
-                    test: /[\\/]node_modules[\\/]/,
-                    name: "vendor",
-                    chunks: "all"
-                }
-            }
-        }
-    },
-    plugins:[
-        new HtmlWebpackPlugin({
-            title: 'react router demo'
-        })
-    ],
+    // optimization: {
+    //     runtimeChunk: {
+    //         name: "manifest"
+    //     },
+    //     splitChunks: {
+    //         cacheGroups: {
+    //             commons: {
+    //                 test: /[\\/]node_modules[\\/]/,
+    //                 name: "vendor",
+    //                 chunks: "all"
+    //             }
+    //         }
+    //     }
+    // },
+    // plugins:[
+    //     new HtmlWebpackPlugin({
+    //         title: 'react router demo'
+    //     })
+    // ],
     module: {
-        //webpack 4 不支持loaders[]写法
         rules:[
             {
                 test:/\.js$/,

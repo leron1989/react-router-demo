@@ -170,4 +170,103 @@
     ```javascript
         devtool: 'inline-source-map',
     ```
+
+
+* react router 4.0前后路由对比
+
+    1. 4.0之前版本
+    >4.0前版本的react router中，嵌套的路由可以放在一个router标签中，形式如下,嵌套的路由也直接放在一起。
+    ```javascript
+        <Route component={App}>
+            <Route path="groups" components={Groups} />
+            <Route path="users" components={Users}>
+                <Route path="users/:userId" component={Profile} />
+            </Route>
+        </Route>
+    ```
+
+
+    2. 4.0之后版本
+    >在4.0以后，嵌套的路由与之前的就完全不同了，需要单独放置在嵌套的根component中去处理路由，否则会一直有warning:
+    >You should not use <Route component> and <Route children> in the same route
+
+    >正确形式如下
+    ```javascript
+        <Route component={App}>
+            <Route path="groups" components={Groups} />
+            <Route path="users" components={Users}>
+            /*<Route path="users/:userId" component={Profile} />*/
+            </Route>
+        </Route>
+    ```
+
+    >4.0之后版本中，react router完整的嵌套路由的例子如下：
+
+
     
+
+    ```javascript
+        /**
+         * 以下代码采用ES6格式
+         * react-router-dom版本为4.1.1
+         * 请注意使用诸如HashRouter之类的history，否则一直会有warning，不能渲染 
+         */
+        import React, { Component } from 'react';
+        import ReactDOM from 'react-dom';
+        import {HashRouter, Route, Link, Switch} from 'react-router-dom';
+
+        class App extends Component {
+            render() {
+                return (
+                    <div>
+                        <h1>App</h1>
+                        <ul>
+                        <li><Link to="/">Home</Link></li>
+                        <li><Link to="/about">About</Link></li>
+                        <li><Link to="/inbox">Inbox</Link></li>
+                        </ul>
+                        {this.props.children}
+                    </div>
+                );
+            }
+        }
+
+        const About = () => (
+            <div>
+                <h3>About</h3>
+            </div>
+        )
+
+        const Home = () => (
+            <div>
+                <h3>Home</h3>
+            </div>
+        )
+
+        const Message = ({ match }) => (
+            <div>
+                <h3>new messages</h3>
+                <h3>{match.params.id}</h3>
+            </div>
+        )
+
+        const Inbox = ({ match }) => (
+            <div>
+                <h2>Topics</h2>
+                <Route path={`${match.url}/messages/:id``} component={Message}/>
+            </div>
+        ) 
+
+        ReactDOM.render(
+            (<HashRouter>
+                <App>
+                    <Route exact path="/" component={Home} />
+                    <Route path="/about" component={About} />
+                    <Route path="/inbox" component={Inbox} />
+                </App>
+            </HashRouter>),
+            document.getElementById('root')
+        );
+    ```
+
+

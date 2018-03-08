@@ -37,11 +37,15 @@ module.exports = {
     module: {
         rules:[
             {
-                test:/\.js$/,
+                test: /\.js$/,
                 exclude: /node_modules/,
-                loaders: 'babel-loader',
+                loader: 'babel-loader?presets[]=react,presets[]=es2015,presets[]=stage-0',
+                // loaders: 'babel-loader',
                 query: {
-                    presets:['es2015', 'react']
+                    presets:['es2015', 'react'],
+                    plugins: [
+                        ["import", {libraryName: "antd", style: "css"}]
+                    ]
                 }
             },
             {
@@ -66,7 +70,7 @@ module.exports = {
             {
                 test:/\.(csv|tsv)$/,
                 use:[
-                    'csc-loader'
+                    'csv-loader'
                 ]
             },
             {

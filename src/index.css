@@ -1,0 +1,11 @@
+
+
+.logo {
+    height: 32px;
+    background: rgba(10, 2, 2, 0.2);
+    margin: 16px;
+}
+
+.editable-row-operations a {
+    margin-right: 8px;
+  }

@@ -27,7 +27,7 @@ const AuthExample = () => (
       </ul>
       <Route path="/public" component={Public} />
       <Route path="/login" component={Login} />
-      <PrivateRoute path="/protected" component={Protected} />
+      <PrivateRoute exact path="/protected" component={Protected} />
     </div>
   </Router>
 );
@@ -62,23 +62,44 @@ const AuthButton = withRouter(
     )
 );
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      fakeAuth.isAuthenticated ? (
-        <Component {...props} />
-      ) : (
-        <Redirect
-          to={{
-            pathname: "/login",
-            state: { from: props.location }
-          }}
-        />
-      )
-    }
-  />
-);
+/**
+ * 改写Route组件
+ * Component为PrivateRoute中component属性指向的组件
+ * ...rest为PrivateRoute的其它属性
+ * 
+ * 如果fakeAuth.isAuthenticated为true，则调用Protected组件
+ * 如果fakeAuth.isAuthenticated为false，则重定向到"/login"
+ * @param {*} param0 
+ */
+const PrivateRoute = ({ component: Component, ...rest }) => {
+	console.log(Component) //结果是：<Protected />组件
+	console.log(rest); //结果是：{"exact": true, "path": "/protected"}
+	console.log({...rest}); //结果是：{"exact": true, "path": "/protected"}
+	//rest 等价于 {...rest}
+
+	console.log(fakeAuth.isAuthenticated);
+
+	
+    return (
+      	<Route
+			{...rest}
+			render={props => {
+				console.log(props) //结果为：Object { match: {…}, location: {…}, history: {…}, staticContext: undefined }
+				return fakeAuth.isAuthenticated ? (
+				<Component {...props} />
+				) : (
+				<Redirect
+					to={{
+					pathname: "/login",
+					state: { from: props.location }
+					}}
+				/>
+				)
+			}
+			}
+      	/>
+    )
+};
 
 const Public = () => <h3>Public</h3>;
 const Protected = () => <h3>Protected</h3>;
@@ -91,25 +112,27 @@ class Login extends React.Component {
         };
     }
 
-    login = () => {
-        // fakeAuth.authenticate(() => {
-        //   this.setState({ redirectToReferrer: true });
-        // });
+    login(){
+        fakeAuth.authenticate(() => {
+          this.setState({ redirectToReferrer: true });
+        });
     };
 
     render() {
-        const { from } = this.props.location.state || { from: { pathname: "/" } };
+		console.log(this.props.location.state) //结果为：from: Object { pathname: "/protected", search: "", key: "2r5yk0", … }
+		const { from } = this.props.location.state || { from: { pathname: "/" } };
+		console.log(from) //结果为：Object { pathname: "/protected", search: "", hash: "", state: undefined, key: "2r5yk0" }
         const { redirectToReferrer } = this.state;
 
         if (redirectToReferrer) {
-        return <Redirect to={from} />;
+        	return <Redirect to={from} />;
         }
 
         return (
-        <div>
-            <p>You must log in to view the page at {from.pathname}</p>
-            <button onClick={this.login.bind(this)}>Log in</button>
-        </div>
+			<div>
+				<p>You must log in to view the page at {from.pathname}</p>
+				<button onClick={this.login.bind(this)}>Log in</button>
+			</div>
         );
     }
 }

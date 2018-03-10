@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Table, Input, Popconfirm } from 'antd';
 
 const data = [];
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 1000000; i++) {
   data.push({
     key: i.toString(),
     name: `Edrward ${i}`,

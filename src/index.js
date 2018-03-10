@@ -7,6 +7,7 @@ import Home from './modules/Home';
 import Basic from './modules/router/basic/Basic';
 import UrlParam from './modules/router/param/UrlParam';
 import Redirects from './modules/router/redirects/Redirects';
+import CustomLink from './modules/router/link/CustomLink';
 
 import AntdList from './modules/AntdList';
 
@@ -92,7 +93,7 @@ class LeftContent extends React.Component{
                         <Menu.Item key="61"><Link to="/">基本使用</Link></Menu.Item>
                     </SubMenu>
                     <SubMenu key="sub7" title={<span><span>Ant Design</span></span>}>
-                        <Menu.Item key="71"><Link to="/">基本使用</Link></Menu.Item>
+                        <Menu.Item key="71"><Link to="/antd_grid">基本使用</Link></Menu.Item>
                     </SubMenu>
                 </Menu>
             </Sider>
@@ -108,7 +109,7 @@ const CenterContent = () => (
         <Route path="/basic" component={Basic} />
         <Route path="/url_param" component={UrlParam} />
         <Route path="/redirects" component={Redirects} />
-        <Route path="/custom_link" component={Home} />
+        <Route path="/custom_link" component={CustomLink} />
         <Route path="/preventing_transitions" component={Home} />
         <Route path="/no_match" component={Home} />
         <Route path="/recursive_paths" component={Home} />

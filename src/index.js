@@ -8,8 +8,13 @@ import Basic from './modules/router/basic/Basic';
 import UrlParam from './modules/router/param/UrlParam';
 import Redirects from './modules/router/redirects/Redirects';
 import CustomLink from './modules/router/link/CustomLink';
+import PreventingTransition from './modules/router/preventing/PreventingTransition';
+import NoMatch from './modules/router/nomatch/NoMatch';
+import RecursivePaths from './modules/router/recursivepaths/RecursivePaths';
+import Sidebar from './modules/router/sidebar/Sidebar';
+import AnimatedTransitions from './modules/router/animatedtransitions/AnimatedTransitions';
 
-import AntdList from './modules/AntdList';
+import AntdList from './modules/antd/AntdList';
 
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import 'antd/dist/antd.css';
@@ -110,11 +115,11 @@ const CenterContent = () => (
         <Route path="/url_param" component={UrlParam} />
         <Route path="/redirects" component={Redirects} />
         <Route path="/custom_link" component={CustomLink} />
-        <Route path="/preventing_transitions" component={Home} />
-        <Route path="/no_match" component={Home} />
-        <Route path="/recursive_paths" component={Home} />
-        <Route path="/sidebar" component={Home} />
-        <Route path="/animated_transitions" component={Home} />
+        <Route path="/preventing_transitions" component={PreventingTransition} />
+        <Route path="/no_match" component={NoMatch} />
+        <Route path="/recursive_paths" component={RecursivePaths} />
+        <Route path="/sidebar" component={Sidebar} />
+        <Route path="/animated_transitions" component={AnimatedTransitions} />
         <Route path="/ambiguous_atches" component={Home} />
         <Route path="/route_config" component={Home} />
         <Route path="/modal_gallery" component={Home} />

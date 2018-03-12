@@ -13,21 +13,21 @@ import {
 // 3. Log in
 // 4. Click the back button, note the URL each time
 
-const AuthExample = () => (
+const AuthExample = ({match}) => (
   <Router>
     <div>
       <AuthButton />
       <ul>
         <li>
-          <Link to="/public">Public Page</Link>
+          <Link to={`${match.url}/public`}>Public Page</Link>
         </li>
         <li>
-          <Link to="/protected">Protected Page</Link>
+          <Link to={`${match.url}/protected`}>Protected Page</Link>
         </li>
       </ul>
-      <Route path="/public" component={Public} />
-      <Route path="/login" component={Login} />
-      <PrivateRoute exact path="/protected" component={Protected} />
+      <Route path={`${match.url}/public`} component={Public} />
+      <Route path={`${match.url}/login`} component={Login} />
+      <PrivateRoute exact path={`${match.url}/protected`} component={Protected} />
     </div>
   </Router>
 );
@@ -51,7 +51,7 @@ const AuthButton = withRouter(
         Welcome!{" "}
         <button
           onClick={() => {
-            fakeAuth.signout(() => history.push("/"));
+            fakeAuth.signout(() => history.push("/redirects"));
           }}
         >
           Sign out
@@ -90,7 +90,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 				) : (
 				<Redirect
 					to={{
-					pathname: "/login",
+					pathname: '/redirects/login',
 					state: { from: props.location }
 					}}
 				/>
@@ -120,7 +120,7 @@ class Login extends React.Component {
 
     render() {
 		console.log(this.props.location.state) //结果为：from: Object { pathname: "/protected", search: "", key: "2r5yk0", … }
-		const { from } = this.props.location.state || { from: { pathname: "/" } };
+		const { from } = this.props.location.state || { from: { pathname: "/redirects" } };
 		console.log(from) //结果为：Object { pathname: "/protected", search: "", hash: "", state: undefined, key: "2r5yk0" }
         const { redirectToReferrer } = this.state;
 

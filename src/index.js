@@ -13,6 +13,9 @@ import NoMatch from './modules/router/nomatch/NoMatch';
 import RecursivePaths from './modules/router/recursivepaths/RecursivePaths';
 import Sidebar from './modules/router/sidebar/Sidebar';
 import AnimatedTransitions from './modules/router/animatedtransitions/AnimatedTransitions';
+import AmbiguousAtches from './modules/router/ambiguousatches/AmbiguousAtches';
+import RouteConfig from './modules/router/routeconfig/RouteConfig';
+import ModalGallery from './modules/router/modalgallery/ModalGallery';
 
 import AntdList from './modules/antd/AntdList';
 
@@ -120,9 +123,9 @@ const CenterContent = () => (
         <Route path="/recursive_paths" component={RecursivePaths} />
         <Route path="/sidebar" component={Sidebar} />
         <Route path="/animated_transitions" component={AnimatedTransitions} />
-        <Route path="/ambiguous_atches" component={Home} />
-        <Route path="/route_config" component={Home} />
-        <Route path="/modal_gallery" component={Home} />
+        <Route path="/ambiguous_atches" component={AmbiguousAtches} />
+        <Route path="/route_config" component={RouteConfig} />
+        <Route path="/modal_gallery" component={ModalGallery} />
 
 
         <Route path="/antd_grid" component={AntdList} />
